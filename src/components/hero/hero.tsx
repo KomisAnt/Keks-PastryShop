@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
+
 function Hero(): JSX.Element {
   return (
     <div className="hero">
@@ -9,7 +13,7 @@ function Hero(): JSX.Element {
           <p className="hero__subtitle">Твоя пушистая кондитерская</p>
           <p className="hero__title">КЕКС</p>
           <div className="hero__button-wrapper">
-            <a className="btn" href="catalog-page.html">Скорее смотреть</a>
+            <Link to={AppRoute.Catalog} className="btn">Скорее смотреть</Link>
           </div>
         </div>
       </div>
