@@ -1,6 +1,6 @@
 function CardItem(): JSX.Element {
   return (
-    <div className="card-item">
+    <div className="card-item card-item--big">
       <a className="card-item__img-link" href="#">
         <div className="card-item__img-wrapper">
           <picture>
@@ -15,6 +15,7 @@ function CardItem(): JSX.Element {
           <use xlinkHref="#icon-like"></use>
         </svg>
       </button>
+      <span className="card-item__price">9 300 p</span>
       <a className="card-item__link" href="#">
         <h3 className="card-item__title">
           <span>Торт Голубика</span>
