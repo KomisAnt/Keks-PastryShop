@@ -1,4 +1,4 @@
-import Review from '../review/review';
+import Review from '../card-review/card-review';
 
 function LastReviewBlock(): JSX.Element {
   return (

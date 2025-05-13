@@ -1,4 +1,4 @@
-function Review(): JSX.Element {
+function CardReview(): JSX.Element {
   return (
     <div className="review">
       <div className="review__inner-wrapper review__inner-wrapper--border">
@@ -36,4 +36,4 @@ function Review(): JSX.Element {
   );
 }
 
-export default Review;
+export default CardReview;
