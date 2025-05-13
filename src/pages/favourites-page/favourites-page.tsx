@@ -2,7 +2,7 @@ import Header from '../../components/header/header';
 import BackLinkBlock from '../../components/back-link-block/back-link-block';
 import Footer from '../../components/footer/footer';
 
-function FavoritesPage(): JSX.Element {
+function FavouritesPage(): JSX.Element {
   return (
     <div className="wrapper">
       <Header />
@@ -35,4 +35,4 @@ function FavoritesPage(): JSX.Element {
   );
 }
 
-export default FavoritesPage;
+export default FavouritesPage;

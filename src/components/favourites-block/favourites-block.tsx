@@ -1,6 +1,6 @@
 import CardItem from '../card-item/card-item';
 
-function FavoritesBlock(): JSX.Element {
+function FavouritesBlock(): JSX.Element {
   return (
     <section className="favourites">
       <div className="container">
@@ -28,4 +28,4 @@ function FavoritesBlock(): JSX.Element {
   );
 }
 
-export default FavoritesBlock;
+export default FavouritesBlock;
