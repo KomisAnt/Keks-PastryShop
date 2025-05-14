@@ -6,7 +6,7 @@ export enum Categories {
   Dessert = 'dessert',
 }
 
-export enum ProductType {
+export enum ProductTypes {
   Chocolate = 'chocolate',
   Vanilla = 'vanilla',
   Vegetarian = 'vegetarian',
