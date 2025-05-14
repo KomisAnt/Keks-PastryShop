@@ -1,12 +1,12 @@
 
-export enum Categories {
+export enum CategoryName {
   Bisque = 'bisque',
   Cheesecake = 'cheesecake',
   Shortbread = 'shortbread',
   Dessert = 'dessert',
 }
 
-export enum ProductTypes {
+export enum ProductType {
   Chocolate = 'chocolate',
   Vanilla = 'vanilla',
   Vegetarian = 'vegetarian',
@@ -44,4 +44,12 @@ export enum APIRoute {
   UserAvatar = '/users/upload',
   UserLogin = '/users/login',
   UserLogout = '/users/logout'
+}
+
+export enum SliceName {
+  Product = 'product-data',
+  Category = 'category-data',
+  Favorite = 'favorite-data',
+  Review = 'review-data',
+  User = 'user-data',
 }

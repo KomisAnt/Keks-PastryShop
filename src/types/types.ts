@@ -1,21 +1,23 @@
-import { Categories, ProductTypes } from '../const';
+import { CategoryName, ProductType } from '../const';
 
-export type Products = {
+export type Product = {
   id: string;
   title: string;
-  category: Categories;
-  type: ProductTypes;
+  category: CategoryName;
+  type: ProductType;
   price: number;
   previewImage: string;
   isFavorite: boolean;
   isNew: boolean;
 }
 
-export type Product = {
+export type Products = Product[];
+
+export type ProductDetails = {
   id: string;
   title: string;
-  category: Categories;
-  type: ProductTypes;
+  category: CategoryName;
+  type: ProductType;
   price: number;
   previewImage: string;
   previewImageWebp: string;

@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 
-import { saveToken, dropToken } from '../services/token';
+// import { saveToken, dropToken } from '../services/token';
 import { APIRoute } from '../const';
 
 import { RootState } from './store';
+import { ProductDetails, Products } from '../types/types';
 
 
 const FetchActions = {
@@ -23,4 +24,24 @@ const FetchActions = {
   USER_LOGOUT: 'user/logout',
 };
 
+export const fetchProducts = createAsyncThunk<Products, undefined, {
+  state: RootState;
+  extra: AxiosInstance;
+}>(
+  FetchActions.FETCH_PRODUCTS,
+  async (_, { extra: api }) => {
+    const { data } = await api.get<Products>(APIRoute.Products);
+    return data;
+  },
+);
 
+export const fetchProductDetails = createAsyncThunk<ProductDetails, number, {
+  state: RootState;
+  extra: AxiosInstance;
+}>(
+  FetchActions.FETCH_PRODUCT,
+  async (id, { extra: api }) => {
+    const { data } = await api.get<ProductDetails>(`${APIRoute.Products}/${id}`);
+    return data;
+  },
+);
