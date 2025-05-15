@@ -9,13 +9,19 @@ function CatalogBlock(): JSX.Element {
 
   const products = useSelector(getProducts);
 
+  // console.log(products)
+
   const [cardsCountView, setCardsCountView] = React.useState<number>(CATALOG_COUNT_ITEMS_VIEW);
   const [isButtonView, setIsButtonView] = React.useState<boolean>(true);
 
-  const handlerButtonClick = () => {
+  const handlerButtonShowMore = () => {
     if (cardsCountView <= products.length) {
       setCardsCountView(cardsCountView + CATALOG_COUNT_ITEMS_VIEW);
     }
+  };
+
+  const handlerButtonToTop = () => {
+    window.scroll(0, 0);
   };
 
   React.useEffect(() => {
@@ -47,7 +53,7 @@ function CatalogBlock(): JSX.Element {
             <button
               className="btn btn--second"
               type="button"
-              onClick={handlerButtonClick}
+              onClick={isButtonView ? handlerButtonShowMore : handlerButtonToTop}
             >
               {
                 isButtonView ? 'Показать еще' : 'в начало'
