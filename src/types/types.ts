@@ -7,6 +7,7 @@ export type Product = {
   type: ProductType;
   price: number;
   previewImage: string;
+  previewImageWebp: string;
   isFavorite: boolean;
   isNew: boolean;
 }

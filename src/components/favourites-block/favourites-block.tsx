@@ -14,12 +14,9 @@ function FavouritesBlock(): JSX.Element {
           <h2 className="visually-hidden">Каталог</h2>
           <div className="catalog__wrapper">
             <ul className="catalog__list">
-              <li className="catalog__item">
+              {/* <li className="catalog__item">
                 <CardItem />
-              </li>
-              <li className="catalog__item">
-                <CardItem />
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

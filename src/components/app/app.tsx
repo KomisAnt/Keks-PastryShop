@@ -9,8 +9,8 @@ import FavouritesPage from '../../pages/favourites-page/favourites-page';
 import PrivateRoute from '../private-route/private-route';
 import LoginPage from '../../pages/login-page/login-page';
 import RegisterPage from '../../pages/register-page/register-page';
-import { useSelector } from 'react-redux';
-import { getProducts } from '../../store/slices/products-data/products-data-slice';
+// import { useSelector } from 'react-redux';
+// import { getProducts } from '../../store/slices/products-data/products-data-slice';
 import { useAppDispatch } from '../../store/store';
 import React from 'react';
 import { fetchProducts } from '../../store/api-actions';
@@ -22,8 +22,8 @@ function App(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const products = useSelector(getProducts);
-  console.log('products = ', products);
+  // const products = useSelector(getProducts);
+  // console.log('products = ', products);
 
   React.useEffect(() => {
     dispatch(fetchProducts());
