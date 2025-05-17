@@ -1,18 +1,29 @@
 import React from 'react';
 
+import { fetchProducts } from '../../store/api-actions';
+
+import { useAppDispatch } from '../../store/store';
+import { setCategoryFilteredProducts, setCategoryFilterValue } from '../../store/slices/products-data/products-data-slice';
+
+import CatalogFilterSecondLevel from '../catalog-filter-second-level/catalog-filter-second-level';
+
+import { CategoryName } from '../../const';
+
 const filterNamesFirstLevel = ['Бисквит', 'Десерт', 'Чизкейк', 'Песочное'] as const;
 
 function CatalogFilter(): JSX.Element {
 
+  const dispatch = useAppDispatch();
+
   const [isActiveFilterFirstLevel, setIsActiveFilterFirstLevel] = React.useState<boolean>(false);
   const [activeFilterFirstLevelIndex, setActiveFilterFirstLevelIndex] = React.useState<number | null>(null);
+
   const [isFilterSecondLevelView, setIsFilterSecondLevelView] = React.useState<boolean>(false);
 
-  const handleButtonFirstFilterClick = (index: number) => {
+  const handlerButtonFirstFilterClick = (index: number) => {
     if (index === activeFilterFirstLevelIndex) {
       setIsActiveFilterFirstLevel(!isActiveFilterFirstLevel);
     } else if (index !== activeFilterFirstLevelIndex) {
-      setIsActiveFilterFirstLevel(false);
       setActiveFilterFirstLevelIndex(index);
       setIsActiveFilterFirstLevel(true);
     }
@@ -27,7 +38,13 @@ function CatalogFilter(): JSX.Element {
 
   React.useEffect(() => {
     setIsFilterSecondLevelView(isActiveFilterFirstLevel);
-  }, [isActiveFilterFirstLevel]);
+    if (isActiveFilterFirstLevel && activeFilterFirstLevelIndex !== null) {
+      dispatch(setCategoryFilterValue(CategoryName[filterNamesFirstLevel[activeFilterFirstLevelIndex]]));
+      dispatch(setCategoryFilteredProducts());
+    } else if (!isActiveFilterFirstLevel) {
+      dispatch(fetchProducts());
+    }
+  }, [isActiveFilterFirstLevel, activeFilterFirstLevelIndex]);
 
   return (
     <div className="catalog-filter">
@@ -44,7 +61,7 @@ function CatalogFilter(): JSX.Element {
                   <button
                     className={`btn btn--filter-first-level ${isActiveFilterFirstLevelActive(index)}`}
                     type="button"
-                    onClick={() => handleButtonFirstFilterClick(index)}
+                    onClick={() => handlerButtonFirstFilterClick(index)}
                   >
                     {filterName}
                   </button>
@@ -54,47 +71,7 @@ function CatalogFilter(): JSX.Element {
           </ul>
         </div>
 
-        {
-          isFilterSecondLevelView
-            ?
-            <div className="catalog-filter__second-level">
-              <h3 className="catalog-filter__title catalog-filter__title--second-level">начинки</h3>
-              <ul className="catalog-filter__list catalog-filter__list--second-level">
-                <li className="catalog-filter__item catalog-filter__item--second-level">
-                  <div className="custom-toggle custom-toggle--checkbox">
-                    <input type="checkbox" value="chocolate" id="catalog-second-level-id-1" name="catalog-second-level" />
-                    <label className="custom-toggle__label" htmlFor="catalog-second-level-id-1">Шоколадный</label>
-                  </div>
-                </li>
-                <li className="catalog-filter__item catalog-filter__item--second-level">
-                  <div className="custom-toggle custom-toggle--checkbox">
-                    <input type="checkbox" value="vegetarian" id="catalog-second-level-id-2" name="catalog-second-level" />
-                    <label className="custom-toggle__label" htmlFor="catalog-second-level-id-2">Вегетарианский</label>
-                  </div>
-                </li>
-                <li className="catalog-filter__item catalog-filter__item--second-level">
-                  <div className="custom-toggle custom-toggle--checkbox">
-                    <input type="checkbox" value="new-york" id="catalog-second-level-id-3" name="catalog-second-level" />
-                    <label className="custom-toggle__label" htmlFor="catalog-second-level-id-3">Нью-Йорк</label>
-                  </div>
-                </li>
-                <li className="catalog-filter__item catalog-filter__item--second-level">
-                  <div className="custom-toggle custom-toggle--checkbox">
-                    <input type="checkbox" value="lemon" id="catalog-second-level-id-4" name="catalog-second-level" />
-                    <label className="custom-toggle__label" htmlFor="catalog-second-level-id-4">Лимонный</label>
-                  </div>
-                </li>
-                <li className="catalog-filter__item catalog-filter__item--second-level">
-                  <div className="custom-toggle custom-toggle--checkbox">
-                    <input type="checkbox" value="vanilla" id="catalog-second-level-id-5" name="catalog-second-level" />
-                    <label className="custom-toggle__label" htmlFor="catalog-second-level-id-5">Ваниль</label>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            : ''
-        }
-
+        {isFilterSecondLevelView ? <CatalogFilterSecondLevel /> : ''}
 
       </div>
     </div >

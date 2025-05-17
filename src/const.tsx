@@ -1,23 +1,37 @@
 
 export enum CategoryName {
-  Bisque = 'bisque',
-  Cheesecake = 'cheesecake',
-  Shortbread = 'shortbread',
-  Dessert = 'dessert',
+  Бисквит = 'bisque',
+  Чизкейк = 'cheesecake',
+  Песочное = 'shortbread',
+  Десерт = 'dessert',
 }
 
+// export enum ProductType {
+//   Chocolate = 'chocolate',
+//   Vanilla = 'vanilla',
+//   Vegetarian = 'vegetarian',
+//   HoneyCake = 'honey-cake',
+//   Lemon = 'lemon',
+//   NewYork = 'new-york',
+//   Tart = 'tart',
+//   FunnelCake = 'funnel-cake',
+//   BasketCake = 'basket-cake',
+//   ChocolateMuffin = 'chocolate-muffin',
+//   BrandMuffin = 'brand-muffin'
+// }
+
 export enum ProductType {
-  Chocolate = 'chocolate',
-  Vanilla = 'vanilla',
-  Vegetarian = 'vegetarian',
-  HoneyCake = 'honey-cake',
-  Lemon = 'lemon',
-  NewYork = 'new-york',
-  Tart = 'tart',
-  FunnelCake = 'funnel-cake',
-  BasketCake = 'basket-cake',
-  ChocolateMuffin = 'chocolate-muffin',
-  BrandMuffin = 'brand-muffin'
+  Шоколадный = 'chocolate',
+  Ваниль = 'vanilla',
+  Вегетарианский = 'vegetarian',
+  Медовый = 'honey-cake',
+  Лимонный = 'lemon',
+  'Нью-Йорк' = 'new-york',
+  Терпкий = 'tart',
+  Воронка = 'funnel-cake',
+  Корзинка = 'basket-cake',
+  'Шоколадный маффин' = 'chocolate-muffin',
+  'Фирменный маффин' = 'brand-muffin'
 }
 
 export enum AppRoute {
