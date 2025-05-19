@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import HeaderNotAuthtorized from '../../components/header-not-authtorized/header-not-authtorized';
+import { AppRoute } from '../../const';
 
 function Error404Page(): JSX.Element {
   return (
@@ -14,7 +16,7 @@ function Error404Page(): JSX.Element {
               Она была удалена<br />или<br />вы&nbsp;указали неправильный адрес.
             </p>
             <div className="error-page__button">
-              <a className="btn btn--large" href="index.html">Вернуться&nbsp;на&nbsp;главную</a>
+              <Link to={AppRoute.Root} className="btn btn--large" >Вернуться&nbsp;на&nbsp;главную</Link>
             </div>
           </div>
         </section>

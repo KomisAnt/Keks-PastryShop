@@ -7,6 +7,7 @@ type CardItemProps = Product & {
 }
 
 function CardItem({
+  id,
   isFavorite,
   isNew,
   previewImage,
@@ -15,10 +16,11 @@ function CardItem({
   title,
   currentClass
 }: CardItemProps): JSX.Element {
+
   return (
     <li className={currentClass}>
       <div className="card-item card-item--big">
-        <Link to={AppRoute.Card} className="card-item__img-link">
+        <Link to={`${AppRoute.Card}/${id}`} className="card-item__img-link">
           <div className="card-item__img-wrapper">
             <picture>
               <source
@@ -46,7 +48,7 @@ function CardItem({
             : ''
         }
 
-        <Link to={AppRoute.Card} className="card-item__link">
+        <Link to={`${AppRoute.Card}/${id}`} className="card-item__link">
           <h3 className="card-item__title">
             <span>{title}</span>
           </h3>

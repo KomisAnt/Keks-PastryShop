@@ -24,6 +24,8 @@ const FetchActions = {
   USER_LOGOUT: 'user/logout',
 };
 
+// Получение списка товаров и данных по товару
+
 export const fetchProducts = createAsyncThunk<Products, undefined, {
   state: RootState;
   extra: AxiosInstance;
@@ -35,7 +37,7 @@ export const fetchProducts = createAsyncThunk<Products, undefined, {
   },
 );
 
-export const fetchProductDetails = createAsyncThunk<ProductDetails, number, {
+export const fetchProductDetails = createAsyncThunk<ProductDetails, string, {
   state: RootState;
   extra: AxiosInstance;
 }>(
@@ -45,3 +47,6 @@ export const fetchProductDetails = createAsyncThunk<ProductDetails, number, {
     return data;
   },
 );
+
+// Получение комментариев
+

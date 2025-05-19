@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchProducts } from '../../api-actions';
+import { fetchProductDetails, fetchProducts } from '../../api-actions';
 
 import { ProductDetails, Products } from '../../../types/types';
 import { RootState } from '../../store';
@@ -67,11 +67,14 @@ export const productsDataSlice = createSlice({
       state.filteredProducts = action.payload;
       // console.log('fetchProducts - state.products = ', state.products);
     });
+    builder.addCase(fetchProductDetails.fulfilled, (state, action: PayloadAction<ProductDetails>) => {
+      state.productDetails = action.payload;
+    });
   },
 });
 
 export const getProducts = (state: RootState) => state.productData.products;
-// export const getCategoryFilteredProducts = (state: RootState) => state.productData.categoryFilteredProducts;
+export const getProductsDetails = (state: RootState) => state.productData.productDetails;
 export const getFilteredProducts = (state: RootState) => state.productData.filteredProducts;
 export const getTypeFilterValue = (state: RootState) => state.productData.typeFilterValue;
 export const getIsFilterCategoryChange = (state: RootState) => state.productData.isFilterCategoryChange;

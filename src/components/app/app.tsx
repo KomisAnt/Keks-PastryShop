@@ -34,7 +34,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path={AppRoute.Root} element={<IndexPage />} />
         <Route path={AppRoute.Catalog} element={<CatalogPage />} />
-        <Route path={AppRoute.Card} element={<CardPage />} />
+        <Route path={`${AppRoute.Card}/:id`} element={<CardPage />} />
         <Route
           path={AppRoute.Favourite}
           element={

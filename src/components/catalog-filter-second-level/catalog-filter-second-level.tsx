@@ -15,7 +15,8 @@ function CatalogFilterSecondLevel() {
 
   const listRef = React.useRef<HTMLUListElement>(null);
   const listNode = listRef.current;
-  const inputNode = listNode?.querySelectorAll('li > div > input');
+
+  const inputNode = listNode?.querySelectorAll('input[type="checkbox"]');
 
   const [isFilterSecondLevelChecked, setIsFilterSecondLevelChecked] = React.useState<boolean>(false);
 
