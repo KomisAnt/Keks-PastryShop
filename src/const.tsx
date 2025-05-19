@@ -1,4 +1,6 @@
 
+export const MAX_STARS_COUNT = 5;
+
 export enum CategoryName {
   Бисквит = 'bisque',
   Чизкейк = 'cheesecake',

@@ -29,7 +29,7 @@ function MapBlock(): JSX.Element {
                 value="user-agreement-12"
                 id="user-agreement-id-12"
                 name="user-agreement"
-                checked
+                // checked
               />
               <label className="custom-toggle__label" htmlFor="user-agreement-id-12">Кондитерская 2</label>
               <address className="custom-toggle__address">Морской пр. 2А

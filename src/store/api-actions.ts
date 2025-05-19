@@ -5,7 +5,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
 
 import { RootState } from './store';
-import { ProductDetails, Products } from '../types/types';
+import { ProductDetails, Products, Review } from '../types/types';
 
 
 const FetchActions = {
@@ -49,4 +49,16 @@ export const fetchProductDetails = createAsyncThunk<ProductDetails, string, {
 );
 
 // Получение комментариев
+
+export const fetchLastComment = createAsyncThunk<Review, undefined, {
+  state: RootState;
+  extra: AxiosInstance;
+}>(
+  FetchActions.LAST_REVIEW,
+  async (_, { extra: api }) => {
+    const { data } = await api.get<Review>(APIRoute.LastReview);
+    return data;
+  }
+);
+
 

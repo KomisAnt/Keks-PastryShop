@@ -2,7 +2,8 @@ import { useSelector } from 'react-redux';
 import { getProductsDetails } from '../../store/slices/products-data/products-data-slice';
 import { ProductDetails } from '../../types/types';
 
-const MAX_STARS_COUNT = 5;
+import { MAX_STARS_COUNT } from '../../const';
+
 const DESCRIPTION_CAUNT_VIEW = 140;
 
 function CardItemsDetailsBlock(): JSX.Element {

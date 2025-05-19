@@ -1,34 +1,49 @@
-function CardReview(): JSX.Element {
+import { MAX_STARS_COUNT } from '../../const';
+import { Review } from '../../types/types';
+
+type CardReviewProps = Review;
+
+const getDateTimeReview = (isoDate: string): string => {
+  const date = new Date(isoDate);
+  const currentDay = date.getDay();
+  const currentMonth = date.getMonth();
+
+  return (`${currentDay < 10 ? `0${currentDay}` : currentDay}.${currentMonth < 10 ? `0${currentMonth}` : currentMonth}`);
+};
+
+function CardReview({ isoDate, negative, positive, rating, user }: CardReviewProps): JSX.Element {
+
   return (
     <div className="review">
       <div className="review__inner-wrapper review__inner-wrapper--border">
-        <time className="review__date" dateTime="2023-05-15">15.05</time>
-        <span className="review__author">Уважаемый(-ая) Кот</span>
+        <time className="review__date" dateTime="2023-05-15">{getDateTimeReview(isoDate)}</time>
+        <span className="review__author">Уважаемый(-ая) {user.name}</span>
         <div className="star-rating">
-          <svg className="star-rating__star star-rating__star--active" width="30" height="30" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-          <svg className="star-rating__star star-rating__star--active" width="30" height="30" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-          <svg className="star-rating__star star-rating__star--active" width="30" height="30" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-          <svg className="star-rating__star star-rating__star--active" width="30" height="30" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-          <svg className="star-rating__star star-rating__star--active" width="30" height="30" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
+          {
+            Array.from({ length: MAX_STARS_COUNT }).map((_, index) => (
+              <svg
+                key={index}
+                className={`star - rating__star ${rating >= (index + 1) ? 'star-rating__star--active' : ''} `}
+                width="30"
+                height="30"
+                aria-hidden="true"
+              >
+                <use xlinkHref="#icon-star"></use>
+              </svg>
+            ))
+          }
         </div>
         <div className="review__text-wrapper">
-          <p className="review__text">&quot;Отличный сервис! Очень вкусный, сочный и&nbsp;яркий торт. Удобная коробка для транспортировки. Свежие фрукты и&nbsp;съедобный дизайн.</p>
-          <p className="review__text">Недостатков нет, обязательно будем заказывать и&nbsp;приходить в&nbsp;Кексик</p>
+          <p className="review__text">
+            {
+              `${rating > 3 ? positive : negative} `
+            }
+          </p>
         </div>
         <div className="review__image-wrapper">
           <picture>
             <source type="image/webp" srcSet="img/content/review-1.webp, img/content/review-1@2x.webp 2x" />
-            <img src="img/content/review-1.jpg" srcSet="img/content/review-1@2x.jpg 2x" width="162" height="162" alt="Кот" />
+            <img src={user.avatarUrl} width="162" height="162" alt="Кот" />
           </picture>
         </div>
       </div>

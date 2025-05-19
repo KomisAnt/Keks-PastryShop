@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import productsDataReducer from './slices/products-data/products-data-slice';
+import reviesDataReducer from './slices/reviews-data/reviews-data-slice';
 
 import { createAPI } from '../services/api';
 import { useDispatch } from 'react-redux';
@@ -11,6 +12,7 @@ const api = createAPI();
 export const store = configureStore({
   reducer: {
     productData: productsDataReducer,
+    reviewsData: reviesDataReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -19,7 +19,7 @@ function FilterSort(): JSX.Element {
                       type="radio"
                       id="review-sort-1"
                       name="review-sort"
-                      checked
+                      // checked
                     />
                     <label className="custom-toggle__label" htmlFor="review-sort-1">Любой</label>
                   </div>
