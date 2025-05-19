@@ -5,13 +5,15 @@ type CardReviewProps = Review;
 
 const getDateTimeReview = (isoDate: string): string => {
   const date = new Date(isoDate);
-  const currentDay = date.getDay();
-  const currentMonth = date.getMonth();
+  const currentDate = date.getDate();
+  const currentMonth = date.getMonth() + 1;
 
-  return (`${currentDay < 10 ? `0${currentDay}` : currentDay}.${currentMonth < 10 ? `0${currentMonth}` : currentMonth}`);
+  console.log('date =', date, 'currentDate = ', currentDate, 'currentMonth = ', currentMonth)
+
+  return (`${currentDate < 10 ? `0${currentDate}` : currentDate}.${currentMonth < 10 ? `0${currentMonth}` : currentMonth}`);
 };
 
-function CardReview({ isoDate, negative, positive, rating, user }: CardReviewProps): JSX.Element {
+function ReviewBlock({ isoDate, negative, positive, rating, user }: CardReviewProps): JSX.Element {
 
   return (
     <div className="review">
@@ -22,7 +24,7 @@ function CardReview({ isoDate, negative, positive, rating, user }: CardReviewPro
           {
             Array.from({ length: MAX_STARS_COUNT }).map((_, index) => (
               <svg
-                key={index}
+                key={Math.floor(Math.random() * 5000)}
                 className={`star - rating__star ${rating >= (index + 1) ? 'star-rating__star--active' : ''} `}
                 width="30"
                 height="30"
@@ -42,8 +44,8 @@ function CardReview({ isoDate, negative, positive, rating, user }: CardReviewPro
         </div>
         <div className="review__image-wrapper">
           <picture>
-            <source type="image/webp" srcSet="img/content/review-1.webp, img/content/review-1@2x.webp 2x" />
-            <img src={user.avatarUrl} width="162" height="162" alt="Кот" />
+            {/* <source type="image/webp" srcSet="img/content/review-1.webp, img/content/review-1@2x.webp 2x" /> */}
+            <img src={user.avatarUrl} width="162" height="162" alt={user.name} />
           </picture>
         </div>
       </div>
@@ -51,4 +53,4 @@ function CardReview({ isoDate, negative, positive, rating, user }: CardReviewPro
   );
 }
 
-export default CardReview;
+export default ReviewBlock;

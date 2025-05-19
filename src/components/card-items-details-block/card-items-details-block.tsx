@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { getProductsDetails } from '../../store/slices/products-data/products-data-slice';
-import { ProductDetails } from '../../types/types';
+// import { ProductDetails } from '../../types/types';
 
 import { MAX_STARS_COUNT } from '../../const';
 
@@ -10,7 +10,7 @@ function CardItemsDetailsBlock(): JSX.Element {
 
   const cardData = useSelector(getProductsDetails);
 
-  console.log('cardData = ', cardData);
+  // console.log('cardData = ', cardData);
 
   if (cardData === null) {
     return <>Loading...</>;
@@ -18,7 +18,7 @@ function CardItemsDetailsBlock(): JSX.Element {
 
   const {
     description,
-    images,
+    // images,
     isFavorite,
     isNew,
     previewImage,
@@ -57,7 +57,7 @@ function CardItemsDetailsBlock(): JSX.Element {
                 {
                   Array.from({ length: MAX_STARS_COUNT }).map((_, index) => (
                     <svg
-                      key={index}
+                      key={Math.floor(Math.random() * 1000)}
                       className={`star-rating__star ${rating >= (index + 1) ? 'star-rating__star--active' : ''} `}
                       width="30"
                       height="30"

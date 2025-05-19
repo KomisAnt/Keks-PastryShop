@@ -1,4 +1,4 @@
-function CardReviewForm(): JSX.Element {
+function ReviewForm(): JSX.Element {
   return (
     <section className="review-form">
       <div className="container">
@@ -75,4 +75,4 @@ function CardReviewForm(): JSX.Element {
   );
 }
 
-export default CardReviewForm;
+export default ReviewForm;

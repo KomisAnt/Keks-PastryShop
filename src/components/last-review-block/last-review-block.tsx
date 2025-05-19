@@ -1,12 +1,10 @@
 import { useSelector } from 'react-redux';
-import Review from '../card-review/card-review';
+import Review from '../review-block/review-block';
 import { getLastReview } from '../../store/slices/reviews-data/reviews-data-slice';
 
 function LastReviewBlock(): JSX.Element {
 
   const lastReview = useSelector(getLastReview);
-
-  console.log('lastReview = ', lastReview);
 
   return (
     <section className="last-review">
@@ -15,7 +13,6 @@ function LastReviewBlock(): JSX.Element {
         {
           lastReview && <Review {...lastReview} />
         }
-
       </div>
     </section>
   );

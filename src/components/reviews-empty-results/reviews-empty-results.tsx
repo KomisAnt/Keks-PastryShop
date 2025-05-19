@@ -1,4 +1,4 @@
-function CardEmptyReviews(): JSX.Element {
+function ReviewsEmptyResults(): JSX.Element {
   return (
     <section className="empty-results">
       <div className="container">
@@ -13,4 +13,4 @@ function CardEmptyReviews(): JSX.Element {
   );
 }
 
-export default CardEmptyReviews;
+export default ReviewsEmptyResults;

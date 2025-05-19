@@ -13,7 +13,7 @@ import RegisterPage from '../../pages/register-page/register-page';
 // import { getProducts } from '../../store/slices/products-data/products-data-slice';
 import { useAppDispatch } from '../../store/store';
 import React from 'react';
-import { fetchLastComment, fetchProducts } from '../../store/api-actions';
+import { fetchLastReview, fetchProducts } from '../../store/api-actions';
 
 const userAutorizationStatus = AutorizationStatus.Auth;
 
@@ -27,7 +27,7 @@ function App(): JSX.Element {
 
   React.useEffect(() => {
     dispatch(fetchProducts());
-    dispatch(fetchLastComment());
+    dispatch(fetchLastReview());
   }, []);
 
   return (

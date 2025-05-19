@@ -1,10 +1,29 @@
-function CommentsBlock(): JSX.Element {
+
+import { useSelector } from 'react-redux';
+import ReviewBlock from '../review-block/review-block';
+import { getReviews } from '../../store/slices/reviews-data/reviews-data-slice';
+
+function ReviewsBlock(): JSX.Element {
+
+  const reviews = useSelector(getReviews);
+
+  console.log(reviews)
+
   return (
     <section className="comments">
       <h2 className="visually-hidden">Список комментариев</h2>
       <div className="container">
         <div className="comments__wrapper">
-          <div className="review">
+          {
+            reviews && reviews.map((review, index) => (
+              <ReviewBlock
+                key={review.id}
+                {...review}
+              />
+            ))
+          }
+
+          {/* <div className="review">
             <div className="review__inner-wrapper">
               <time className="review__date" dateTime="2023-05-15">
                 15.05
@@ -108,11 +127,11 @@ function CommentsBlock(): JSX.Element {
                 </picture>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
   );
 }
 
-export default CommentsBlock;
+export default ReviewsBlock;
