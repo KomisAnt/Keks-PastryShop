@@ -54,15 +54,27 @@ export type Review = {
 
 export type Reviews = Review[];
 
-// export type ReviewPostData = {
-//   id: string;
-//   positive: string;
-//   disadvantages: string;
-//   'input-star-rating': number;
-// }
 export type ReviewPostData = {
   id: string;
   advantages: string;
   disadvantages: string;
   'input-star-rating': number;
+}
+
+export type UserData = {
+  name: string;
+  email: string;
+  avatarUrl: string;
+  token: string;
+}
+
+export type UserRegistrationData = {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export type UserLoginData = {
+  email: string;
+  password: string;
 }

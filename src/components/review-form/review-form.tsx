@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormHTMLAttributes } from 'react';
 
 import { MAX_STARS_COUNT } from '../../const';
 import { useAppDispatch } from '../../store/store';
@@ -34,7 +34,7 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
   const positiveReviewInputRef = React.useRef<HTMLInputElement>(null);
   const negativeReviewInputRef = React.useRef<HTMLInputElement>(null);
 
-  const reviewFormRef = React.useRef<HTMLFormElement | undefined>();
+  const reviewFormRef = React.useRef<FormHTMLAttributes<HTMLFormElement>>(null);
 
   const isChecked = (index: number): boolean => (index + 1) === inputStarValue;
 
@@ -57,16 +57,21 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
 
   const handleSubmitForm = (evt: React.FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-    const formData = new FormData(reviewFormRef.current);
+    // const formData = new FormData(reviewFormRef.current);
 
-    dispatch(
-      postReview({
-        id,
-        advantages: positiveReviewInputRef.current?.value,
-        disadvantages: negativeReviewInputRef.current?.value,
-        'input-star-rating': inputStarValue,
-      }));
+    //                                                         //
+    // https://www.webdevtutor.net/blog/typescript-useref-form //
+    //                                                         //
 
+    if (positiveReviewInputRef.current && negativeReviewInputRef.current && inputStarValue) {
+      dispatch(
+        postReview({
+          id,
+          advantages: positiveReviewInputRef.current.value,
+          disadvantages: negativeReviewInputRef.current?.value,
+          'input-star-rating': inputStarValue,
+        }));
+    }
     // console.log('data = ', Object.fromEntries(formData));
   };
 

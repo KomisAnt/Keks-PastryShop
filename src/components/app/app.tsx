@@ -37,7 +37,7 @@ function App(): JSX.Element {
         <Route path={AppRoute.Catalog} element={<CatalogPage />} />
         <Route path={`${AppRoute.Card}/:id`} element={<CardPage />} />
         <Route
-          path={AppRoute.Favourite}
+          path={AppRoute.Favourites}
           element={
             <PrivateRoute userAutorizationStatus={userAutorizationStatus}>
               <FavouritesPage />

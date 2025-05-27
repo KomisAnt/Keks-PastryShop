@@ -5,7 +5,8 @@ import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
 
 import { RootState } from './store';
-import { ProductDetails, Products, Review, Reviews, ReviewPostData } from '../types/types';
+import { ProductDetails, Products, Review, Reviews, ReviewPostData, UserRegistrationData, UserData, UserLoginData } from '../types/types';
+import { saveToken } from '../services/token';
 
 
 const FetchActions = {
@@ -18,9 +19,10 @@ const FetchActions = {
   FETCH_REVIEWS: 'product/fetch-reviews',
   POST_REVIEW: 'product/post-review',
   LAST_REVIEW: 'reviews/last-review',
-  USER_REGISTRANION: 'user/regictration',
+  USER_REGISTRATION: 'user/regictration',
   USER_AVATAR: 'user/fetch-avatar',
   USER_LOGIN: 'user/login',
+  USER_POST_LOGIN: 'user/post-login',
   USER_LOGOUT: 'user/logout',
 };
 
@@ -48,7 +50,9 @@ export const fetchProductDetails = createAsyncThunk<ProductDetails, string, {
   },
 );
 
-// Получение комментариев
+// Получение отзывов
+
+//получение последнего отзыва
 
 export const fetchLastReview = createAsyncThunk<Review, undefined, {
   state: RootState;
@@ -61,6 +65,8 @@ export const fetchLastReview = createAsyncThunk<Review, undefined, {
   }
 );
 
+// Получение всех отзывов для товара по id
+
 export const fetchReviews = createAsyncThunk<Reviews, string, {
   state: RootState;
   extra: AxiosInstance;
@@ -71,6 +77,8 @@ export const fetchReviews = createAsyncThunk<Reviews, string, {
     return data;
   }
 );
+
+// Отправка отзыва на сервер
 
 export const postReview = createAsyncThunk<Review, ReviewPostData, {
   state: RootState;
@@ -83,5 +91,32 @@ export const postReview = createAsyncThunk<Review, ReviewPostData, {
     'input-star-rating': rating }, { extra: api }) => {
     const { data } = await api.post<Review>(`${APIRoute.Reviews}/${id}`, { positive, negative, rating });
     return data;
+  }
+);
+
+// Регистрация пользователя
+
+export const userRegistration = createAsyncThunk<void, UserRegistrationData, {
+  state: RootState;
+  extra: AxiosInstance;
+}>(
+  FetchActions.USER_REGISTRATION,
+  async ({ name, email, password }, { extra: api }) => {
+    const { data: { token } } = await api.post<UserData>(APIRoute.UserRegistration, { name, email, password });
+    saveToken(token);
+  }
+);
+
+// Авторизация пользователя
+
+export const userLogin = createAsyncThunk<void, UserLoginData, {
+  state: RootState;
+  extra: AxiosInstance;
+}>(
+  FetchActions.USER_POST_LOGIN,
+  async ({ email, password }, { extra: api }) => {
+    const { data: { token } } = await api.post<UserData>(APIRoute.UserLogin,
+      { email, password });
+    saveToken(token);
   }
 );

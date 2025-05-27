@@ -38,16 +38,17 @@ export enum ProductType {
 
 export enum AppRoute {
   Root = '/',
-  Catalog = '/catalog',
-  Card = '/card',
-  Favourite = '/favourite',
+  Catalog = '/Catalog',
+  Card = '/ProductPage',
+  Favourites = '/Favourites',
   Login = '/login',
-  Register = '/register'
+  Register = '/SignUp',
 }
 
 export enum AutorizationStatus {
   Auth = 'Auth',
-  NoAuth = 'NoAuth'
+  NoAuth = 'NoAuth',
+  Unknown = 'Unknown'
 }
 
 export enum APIRoute {

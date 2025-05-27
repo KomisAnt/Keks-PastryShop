@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
 function LoginPage(): JSX.Element {
   return (
     <div className="wrapper">
@@ -30,9 +33,9 @@ function LoginPage(): JSX.Element {
               </div>
               <p className="login-page__text-wrap">
                 Ещё не зарегистрированы?
-                <a className="login-page__link" href="register-page.html">
+                <Link to={AppRoute.Register} className="login-page__link">
                   Создайте
-                </a>
+                </Link>
                 аккаунт прямо сейчас.
               </p>
             </div>
