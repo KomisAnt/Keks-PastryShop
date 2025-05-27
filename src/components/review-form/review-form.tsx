@@ -1,4 +1,98 @@
-function ReviewForm(): JSX.Element {
+import React from 'react';
+
+import { MAX_STARS_COUNT } from '../../const';
+import { useAppDispatch } from '../../store/store';
+import { postReview } from '../../store/api-actions';
+
+const REVIEW_MIN_LENGTH = 5;
+const REVIEW_MAX_LENGTH = 500;
+
+type ReviewFormProps = {
+  id: string;
+}
+
+function ReviewForm({ id }: ReviewFormProps): JSX.Element {
+
+  // console.log('ReviewForm - UPDATE');
+
+  const dispatch = useAppDispatch();
+
+  const [isFormButtonDisabled, setIsFormButtonDisabled] = React.useState<boolean>(true);
+
+  const [inputStarValue, setInputStarValue] = React.useState<number | null>(null);
+
+  // const [isInputStarCheked, setIsInputStarChecked] = React.useState<boolean>(false);
+
+  const [isPositiveInputReviewRequired, setIsPositiveInputReviewRequired] = React.useState<boolean>(true);
+  const [isNegativeInputReviewRequired, setIsNegativeInputReviewRequired] = React.useState<boolean>(true);
+
+  const [positiveReviewLength, setPositiveReviewLength] = React.useState<number>(0);
+  const [negativeReviewLength, setNegativeReviewLength] = React.useState<number>(0);
+
+  const starRatingRef = React.useRef<HTMLDivElement>(null);
+
+  const positiveReviewInputRef = React.useRef<HTMLInputElement>(null);
+  const negativeReviewInputRef = React.useRef<HTMLInputElement>(null);
+
+  const reviewFormRef = React.useRef<HTMLFormElement | undefined>();
+
+  const isChecked = (index: number): boolean => (index + 1) === inputStarValue;
+
+  // const handleButtonClick = (evt: React.MouseEvent<HTMLButtonElement>): void => {
+  //   console.log(evt.target);
+  // };
+
+  const handlerStarInputChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+    setInputStarValue(Number(evt.target.value));
+  };
+
+  const handlerPositiveReviewInputChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+    setPositiveReviewLength(evt.target.value.length);
+    // console.log(positiveReviewInputRef.current?.validity.valid);
+  };
+
+  const handlerNegativeReviewInputChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+    setNegativeReviewLength(evt.target.value.length);
+  };
+
+  const handleSubmitForm = (evt: React.FormEvent<HTMLFormElement>): void => {
+    evt.preventDefault();
+    const formData = new FormData(reviewFormRef.current);
+
+    dispatch(
+      postReview({
+        id,
+        advantages: positiveReviewInputRef.current?.value,
+        disadvantages: negativeReviewInputRef.current?.value,
+        'input-star-rating': inputStarValue,
+      }));
+
+    // console.log('data = ', Object.fromEntries(formData));
+  };
+
+  React.useEffect(() => {
+    if (inputStarValue !== null && inputStarValue <= 3) {
+      setIsNegativeInputReviewRequired(true);
+      setIsPositiveInputReviewRequired(false);
+    } else if (inputStarValue !== null && inputStarValue > 3) {
+      setIsNegativeInputReviewRequired(false);
+      setIsPositiveInputReviewRequired(true);
+    }
+
+    // console.log('inputStarValue = ', inputStarValue);
+    // console.log('negativeReviewInputRef.valid = ', negativeReviewInputRef.current?.validity.valid);
+    // console.log('positiveReviewInputRef.valid = ', positiveReviewInputRef.current?.validity.valid);
+
+    if (inputStarValue
+      && positiveReviewInputRef.current?.validity.valid
+      && negativeReviewInputRef.current?.validity.valid) {
+      setIsFormButtonDisabled(false);
+    } else {
+      setIsFormButtonDisabled(true);
+    }
+
+  }, [inputStarValue, negativeReviewInputRef.current?.validity.valid, positiveReviewInputRef.current?.validity.valid]);
+
   return (
     <section className="review-form">
       <div className="container">
@@ -6,65 +100,90 @@ function ReviewForm(): JSX.Element {
           <h2 className="review-form__title">оставить отзыв</h2>
           <div className="review-form__form">
             <form
+              ref={reviewFormRef}
               action="#"
               method="post"
               autoComplete="off"
+              encType="multipart/form-data"
+              onSubmit={handleSubmitForm}
             >
               <div className="review-form__inputs-wrapper">
-                <div className="custom-input">
+                <div className="custom-input" style={{ marginBottom: '11px' }}>
                   <label>
                     <span className="custom-input__label">
                       Достоинства
                     </span>
-                    <input type="text" name="advantages" placeholder="Достоинства" required />
+                    <input
+                      ref={positiveReviewInputRef}
+                      type="text"
+                      name="advantages"
+                      placeholder="Достоинства"
+                      minLength={REVIEW_MIN_LENGTH}
+                      maxLength={REVIEW_MAX_LENGTH}
+                      required={isPositiveInputReviewRequired}
+                      onChange={handlerPositiveReviewInputChange}
+                    />
                   </label>
                 </div>
-                <div className="custom-input">
+                <div style={{ marginBottom: '90px' }}>
+                  Осталось символов: {REVIEW_MAX_LENGTH - positiveReviewLength}
+                </div>
+                <div className="custom-input" style={{ marginBottom: '11px' }}>
                   <label>
                     <span className="custom-input__label">
                       Недостатки
                     </span>
-                    <input type="text" name="disadvantages" placeholder="Недостатки" required />
+                    <input
+                      ref={negativeReviewInputRef}
+                      type="text"
+                      name="disadvantages"
+                      placeholder="Недостатки"
+                      minLength={REVIEW_MIN_LENGTH}
+                      maxLength={REVIEW_MAX_LENGTH}
+                      required={isNegativeInputReviewRequired}
+                      onChange={handlerNegativeReviewInputChange}
+                    />
                   </label>
+                </div>
+                <div style={{ marginBottom: '90px' }}>
+                  Осталось символов: {REVIEW_MAX_LENGTH - negativeReviewLength}
                 </div>
               </div>
               <div className="review-form__submit-wrapper">
                 <div className="review-form__rating-wrapper">
-                  <div className="input-star-rating">
-                    <input type="radio" name="input-star-rating" id="input-star-rating-5" value="5" aria-label="5 звезд" />
-                    <label htmlFor="input-star-rating-5">
-                      <svg width="40" height="40" aria-hidden="true">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-                    <input type="radio" name="input-star-rating" id="input-star-rating-4" value="4" aria-label="4 звезды" />
-                    <label htmlFor="input-star-rating-4">
-                      <svg width="40" height="40" aria-hidden="true">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-                    <input type="radio" name="input-star-rating" id="input-star-rating-3" value="3" aria-label="3 звезды" />
-                    <label htmlFor="input-star-rating-3">
-                      <svg width="40" height="40" aria-hidden="true">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-                    <input type="radio" name="input-star-rating" id="input-star-rating-2" value="2" aria-label="2 звезды" />
-                    <label htmlFor="input-star-rating-2">
-                      <svg width="40" height="40" aria-hidden="true">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-                    <input type="radio" name="input-star-rating" id="input-star-rating-1" value="1" aria-label="1 звезда" />
-                    <label htmlFor="input-star-rating-1">
-                      <svg width="40" height="40" aria-hidden="true">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
+                  <div className="input-star-rating" ref={starRatingRef}>
+                    {
+                      Array.from({ length: MAX_STARS_COUNT }).map((_, index) => (
+                        <>
+                          <input
+                            key={Math.floor(Math.random() * 50000)}
+                            type="radio"
+                            name="input-star-rating"
+                            id={`input-star-rating-${index + 1}`}
+                            value={index + 1}
+                            aria-label={`${index + 1} звезд`}
+                            onChange={handlerStarInputChange}
+                            checked={isChecked(index)}
+                          />
+                          <label htmlFor={`input-star-rating-${index + 1}`}>
+                            <svg width="40" height="40" aria-hidden="true">
+                              <use xlinkHref="#icon-star"></use>
+                            </svg>
+                          </label>
+                        </>
+                      )).reverse()
+                    }
                   </div>
                 </div>
                 <div className="review-form__button-wrapper">
-                  <button className="btn review-form__button" type="submit">Отправить отзыв</button>
+                  <button
+                    className="btn review-form__button"
+                    type="submit"
+                    disabled={isFormButtonDisabled}
+                  // onClick={handleButtonClick}
+                  >
+                    Отправить отзыв
+                  </button>
                 </div>
               </div>
             </form>
@@ -75,4 +194,4 @@ function ReviewForm(): JSX.Element {
   );
 }
 
-export default ReviewForm;
+export default React.memo(ReviewForm);

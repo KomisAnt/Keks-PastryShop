@@ -3,14 +3,27 @@ import { getProductsDetails } from '../../store/slices/products-data/products-da
 // import { ProductDetails } from '../../types/types';
 
 import { MAX_STARS_COUNT } from '../../const';
+import { useAppDispatch } from '../../store/store';
+import { setIsReviewFormButtonClick } from '../../store/slices/reviews-data/reviews-data-slice';
+import React from 'react';
 
 const DESCRIPTION_CAUNT_VIEW = 140;
 
 function CardItemsDetailsBlock(): JSX.Element {
 
+  const dispatch = useAppDispatch();
+
   const cardData = useSelector(getProductsDetails);
 
-  // console.log('cardData = ', cardData);
+  const [isReviewFormOpen, setIsReviewFormOpen] = React.useState(false);
+
+  const handlerReviewFormButtonClick = () => {
+    setIsReviewFormOpen(!isReviewFormOpen);
+  };
+
+  React.useEffect(() => {
+    dispatch(setIsReviewFormButtonClick(isReviewFormOpen));
+  }, [isReviewFormOpen, dispatch]);
 
   if (cardData === null) {
     return <>Loading...</>;
@@ -93,7 +106,13 @@ function CardItemsDetailsBlock(): JSX.Element {
                   </svg>
                   <span className="visually-hidden">Понравилось</span>
                 </button>
-                <button className="btn btn--second" type="button">Оставить отзыв</button>
+                <button
+                  className="btn btn--second"
+                  type="button"
+                  onClick={handlerReviewFormButtonClick}
+                >
+                  {isReviewFormOpen ? 'Отменить отзыв' : 'Оставить отзыв'}
+                </button>
               </div>
             </div>
           </div>

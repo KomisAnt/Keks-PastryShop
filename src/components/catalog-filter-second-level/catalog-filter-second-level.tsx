@@ -14,9 +14,7 @@ function CatalogFilterSecondLevel() {
   const isFirstCategoryChange = useSelector(getIsFilterCategoryChange);
 
   const listRef = React.useRef<HTMLUListElement>(null);
-  const listNode = listRef.current;
-
-  const inputNode = listNode?.querySelectorAll('input[type="checkbox"]');
+  const inputNode = listRef.current?.getElementsByTagName('input');
 
   const [isFilterSecondLevelChecked, setIsFilterSecondLevelChecked] = React.useState<boolean>(false);
 
@@ -41,9 +39,9 @@ function CatalogFilterSecondLevel() {
 
   React.useEffect(() => {
     if (isFirstCategoryChange && inputNode !== undefined) {
-      inputNode.forEach((inputElement) => {
-        inputElement.checked = false;
-      });
+      for (const input of inputNode) {
+        input.checked = false;
+      }
       dispatch(setDeleteTypeFilterValue('clear'));
       dispatch(setCategoryFilteredProducts());
     }

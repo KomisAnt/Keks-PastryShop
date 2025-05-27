@@ -53,3 +53,16 @@ export type Review = {
 }
 
 export type Reviews = Review[];
+
+// export type ReviewPostData = {
+//   id: string;
+//   positive: string;
+//   disadvantages: string;
+//   'input-star-rating': number;
+// }
+export type ReviewPostData = {
+  id: string;
+  advantages: string;
+  disadvantages: string;
+  'input-star-rating': number;
+}

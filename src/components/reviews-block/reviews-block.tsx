@@ -7,7 +7,7 @@ function ReviewsBlock(): JSX.Element {
 
   const reviews = useSelector(getReviews);
 
-  console.log(reviews)
+  // console.log(reviews)
 
   return (
     <section className="comments">

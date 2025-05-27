@@ -7,12 +7,13 @@ import CardItemsDetailsBlock from '../../components/card-items-details-block/car
 import FilterSort from '../../components/filter-sort/filter-sort';
 import ReviewsBlock from '../../components/reviews-block/reviews-block';
 import ReviewsEmptyResults from '../../components/reviews-empty-results/reviews-empty-results';
+import ReviewForm from '../../components/review-form/review-form';
 
 import { useAppDispatch } from '../../store/store';
 import { fetchProductDetails, fetchReviews } from '../../store/api-actions';
 import { useSelector } from 'react-redux';
-import { getProductsDetails } from '../../store/slices/products-data/products-data-slice';
-import { getReviews } from '../../store/slices/reviews-data/reviews-data-slice';
+// import { getProductsDetails } from '../../store/slices/products-data/products-data-slice';
+import { getIsReviewFormButtonClick, getReviews } from '../../store/slices/reviews-data/reviews-data-slice';
 
 
 function CardPage(): JSX.Element {
@@ -20,9 +21,10 @@ function CardPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const params = useParams();
+  const { id } = params;
 
   React.useEffect(() => {
-    const { id } = params;
+
     if (id !== undefined) {
       dispatch(fetchProductDetails(id));
       dispatch(fetchReviews(id));
@@ -31,6 +33,7 @@ function CardPage(): JSX.Element {
   }, [params]);
 
   const reviews = useSelector(getReviews);
+  const isReviewFormOpen = useSelector(getIsReviewFormButtonClick);
 
   return (
     <>
@@ -38,6 +41,7 @@ function CardPage(): JSX.Element {
       <main>
         <BackLinkBlock />
         <CardItemsDetailsBlock />
+        {isReviewFormOpen && id !== undefined && <ReviewForm id={id} />}
         {
           reviews && reviews.length > 0
             ?

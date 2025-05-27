@@ -8,8 +8,6 @@ const getDateTimeReview = (isoDate: string): string => {
   const currentDate = date.getDate();
   const currentMonth = date.getMonth() + 1;
 
-  console.log('date =', date, 'currentDate = ', currentDate, 'currentMonth = ', currentMonth)
-
   return (`${currentDate < 10 ? `0${currentDate}` : currentDate}.${currentMonth < 10 ? `0${currentMonth}` : currentMonth}`);
 };
 

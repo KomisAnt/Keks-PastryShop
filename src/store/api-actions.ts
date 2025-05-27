@@ -5,7 +5,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
 
 import { RootState } from './store';
-import { ProductDetails, Products, Review, Reviews } from '../types/types';
+import { ProductDetails, Products, Review, Reviews, ReviewPostData } from '../types/types';
 
 
 const FetchActions = {
@@ -16,7 +16,7 @@ const FetchActions = {
   POST_FAVORITE: 'product/post-favorite',
   DELETE_FAVORITE: 'product/delete-favorite',
   FETCH_REVIEWS: 'product/fetch-reviews',
-  POST_REVIEWS: 'product/post-review',
+  POST_REVIEW: 'product/post-review',
   LAST_REVIEW: 'reviews/last-review',
   USER_REGISTRANION: 'user/regictration',
   USER_AVATAR: 'user/fetch-avatar',
@@ -72,3 +72,16 @@ export const fetchReviews = createAsyncThunk<Reviews, string, {
   }
 );
 
+export const postReview = createAsyncThunk<Review, ReviewPostData, {
+  state: RootState;
+  extra: AxiosInstance;
+}>(
+  FetchActions.POST_REVIEW,
+  async ({ id,
+    advantages: positive,
+    disadvantages: negative,
+    'input-star-rating': rating }, { extra: api }) => {
+    const { data } = await api.post<Review>(`${APIRoute.Reviews}/${id}`, { positive, negative, rating });
+    return data;
+  }
+);

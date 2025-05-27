@@ -1,4 +1,5 @@
 function FilterSort(): JSX.Element {
+
   return (
     <div className="filter-sort">
       <div className="container">
