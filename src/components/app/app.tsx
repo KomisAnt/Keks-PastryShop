@@ -14,8 +14,10 @@ import RegisterPage from '../../pages/register-page/register-page';
 import { useAppDispatch } from '../../store/store';
 import React from 'react';
 import { fetchLastReview, fetchProducts } from '../../store/api-actions';
+import { useSelector } from 'react-redux';
+import { getAutorizationStatus } from '../../store/slices/user-data/user-data-slice';
 
-const userAutorizationStatus = AutorizationStatus.Auth;
+// const userAutorizationStatus = AutorizationStatus.Auth;
 
 
 function App(): JSX.Element {
@@ -24,6 +26,7 @@ function App(): JSX.Element {
 
   // const products = useSelector(getProducts);
   // console.log('products = ', products);
+  const autorizationStatus = useSelector(getAutorizationStatus);
 
   React.useEffect(() => {
     dispatch(fetchProducts());
@@ -39,13 +42,20 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Favourites}
           element={
-            <PrivateRoute userAutorizationStatus={userAutorizationStatus}>
+            <PrivateRoute autorizationStatus={autorizationStatus}>
               <FavouritesPage />
             </PrivateRoute>
           }
         />
         <Route path={AppRoute.Login} element={<LoginPage />} />
-        <Route path={AppRoute.Register} element={<RegisterPage />} />
+        <Route
+          path={AppRoute.Register}
+          element={
+            autorizationStatus !== AutorizationStatus.Auth
+              ? <RegisterPage />
+              : <IndexPage />
+          }
+        />
         <Route path='*' element={<Error404Page />} />
       </Routes>
     </BrowserRouter>

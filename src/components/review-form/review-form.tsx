@@ -1,4 +1,4 @@
-import React, { FormHTMLAttributes } from 'react';
+import React from 'react';
 
 import { MAX_STARS_COUNT } from '../../const';
 import { useAppDispatch } from '../../store/store';
@@ -34,7 +34,7 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
   const positiveReviewInputRef = React.useRef<HTMLInputElement>(null);
   const negativeReviewInputRef = React.useRef<HTMLInputElement>(null);
 
-  const reviewFormRef = React.useRef<FormHTMLAttributes<HTMLFormElement>>(null);
+  const reviewFormRef = React.useRef<HTMLFormElement>(null);
 
   const isChecked = (index: number): boolean => (index + 1) === inputStarValue;
 
@@ -55,7 +55,7 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
     setNegativeReviewLength(evt.target.value.length);
   };
 
-  const handleSubmitForm = (evt: React.FormEvent<HTMLFormElement>): void => {
+  const handleFormSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
     // const formData = new FormData(reviewFormRef.current);
 
@@ -84,10 +84,6 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
       setIsPositiveInputReviewRequired(true);
     }
 
-    // console.log('inputStarValue = ', inputStarValue);
-    // console.log('negativeReviewInputRef.valid = ', negativeReviewInputRef.current?.validity.valid);
-    // console.log('positiveReviewInputRef.valid = ', positiveReviewInputRef.current?.validity.valid);
-
     if (inputStarValue
       && positiveReviewInputRef.current?.validity.valid
       && negativeReviewInputRef.current?.validity.valid) {
@@ -110,7 +106,7 @@ function ReviewForm({ id }: ReviewFormProps): JSX.Element {
               method="post"
               autoComplete="off"
               encType="multipart/form-data"
-              onSubmit={handleSubmitForm}
+              onSubmit={handleFormSubmit}
             >
               <div className="review-form__inputs-wrapper">
                 <div className="custom-input" style={{ marginBottom: '11px' }}>

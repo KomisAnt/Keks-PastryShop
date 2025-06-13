@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 function HeaderNotAuthtorized(): JSX.Element {
+
   return (
     <header className="header">
       <div className="container">
@@ -11,7 +12,12 @@ function HeaderNotAuthtorized(): JSX.Element {
           </Link>
           <div className="header__buttons">
             <div className="header__btn">
-              <Link to={AppRoute.Register} className="btn btn--third header__link header__link--reg">Регистрация</Link>
+              <Link
+                to={AppRoute.Register}
+                className="btn btn--third header__link header__link--reg"
+              >
+                Регистрация
+              </Link>
             </div>
             <div className="header__btn">
               <Link to={AppRoute.Login} className="btn">Войти</Link>

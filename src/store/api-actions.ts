@@ -21,7 +21,7 @@ const FetchActions = {
   LAST_REVIEW: 'reviews/last-review',
   USER_REGISTRATION: 'user/regictration',
   USER_AVATAR: 'user/fetch-avatar',
-  USER_LOGIN: 'user/login',
+  FETCH_USER_STATUS: 'user/status-login',
   USER_POST_LOGIN: 'user/post-login',
   USER_LOGOUT: 'user/logout',
 };
@@ -119,4 +119,17 @@ export const userLogin = createAsyncThunk<void, UserLoginData, {
       { email, password });
     saveToken(token);
   }
+);
+
+// Получение информации о статусе авторизации пользователя
+
+export const fetchUserStatusData = createAsyncThunk<UserData, undefined, {
+  state: RootState;
+  extra: AxiosInstance;
+}>(
+  FetchActions.FETCH_USER_STATUS,
+  async (_, { extra: api }) => {
+    const { data } = await api.get<UserData>(APIRoute.UserLogin);
+    return data;
+  },
 );

@@ -1,6 +1,13 @@
+import { useSelector } from 'react-redux';
 import Logo from '../logo/logo';
+import { getUserStatusData } from '../../store/slices/user-data/user-data-slice';
 
 function Header(): JSX.Element {
+
+  // const userData = useSelector(getUserStatusData);
+
+  // console.log('userData = ', userData);
+
   return (
     <header className="header header--authorized">
       <div className="container">

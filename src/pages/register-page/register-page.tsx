@@ -1,7 +1,61 @@
-import { Link } from "react-router-dom";
-import { AppRoute } from "../../const";
+import React from 'react';
+
+import { Link } from 'react-router-dom';
+import { userRegistration } from '../../store/api-actions';
+import { AppRoute } from '../../const';
+import { useAppDispatch } from '../../store/store';
+// import { useSelector } from 'react-redux';
+// import { getIsSuccessRegistered } from '../../store/slices/user-data/user-data-slice';
 
 function RegisterPage(): JSX.Element {
+
+  const dispatch = useAppDispatch();
+
+  const [isButtonDisabled, setIsButtonDisabled] = React.useState<boolean>(true);
+  const [isInputNameValue, setIsInputNameValue] = React.useState<string>('');
+  const [isInputEmailValue, setIsInputEmailValue] = React.useState<string>('');
+  const [isInputPasswordValue, setIsInputPasswordValue] = React.useState<string>('');
+
+  const userInputNameRef = React.useRef<HTMLInputElement>(null);
+  const userInputEmailRef = React.useRef<HTMLInputElement>(null);
+  const userInputPasswordRef = React.useRef<HTMLInputElement>(null);
+
+  const formRef = React.useRef<HTMLFormElement>(null);
+
+  const handleInputNameChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+    setIsInputNameValue(evt.target.value);
+  };
+
+  const handleInputEmailChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+    setIsInputEmailValue(evt.target.value);
+  };
+
+  const handleInputPasswordChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
+    setIsInputPasswordValue(evt.target.value);
+  };
+
+  const handleFormSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
+    evt.preventDefault();
+
+    dispatch(
+      userRegistration(
+        {
+          name: isInputNameValue,
+          email: isInputEmailValue,
+          password: isInputPasswordValue
+        }
+      )
+    );
+  };
+
+  React.useEffect(() => {
+    if (userInputNameRef.current?.validity.valid && userInputEmailRef.current?.validity.valid && userInputPasswordRef.current?.validity.valid) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [isInputNameValue, isInputEmailValue, isInputPasswordValue]);
+
   return (
     <div className="wrapper">
       <main>
@@ -15,30 +69,73 @@ function RegisterPage(): JSX.Element {
             <div className="register-page__inner">
               <h1 className="register-page__title">Регистрация</h1>
               <div className="register-page__form">
-                <form action="#" method="post" autoComplete="off">
+                <form
+                  action="#"
+                  method="post"
+                  autoComplete="off"
+                  ref={formRef}
+                  onSubmit={handleFormSubmit}
+                >
                   <div className="register-page__fields">
                     <div className="custom-input register-page__field">
                       <label><span className="custom-input__label">Введите ваше имя</span>
-                        <input type="text" name="user-name-1" placeholder="Имя" required />
+                        <input
+                          type="text"
+                          name="user-name-1"
+                          placeholder="Имя"
+                          ref={userInputNameRef}
+                          pattern='[A-Za-z0-9]+'
+                          title='Имя должно иметь минимум одну букву'
+                          onChange={handleInputNameChange}
+                          required
+                        />
                       </label>
                     </div>
                     <div className="custom-input register-page__field">
                       <label><span className="custom-input__label">Введите вашу почту</span>
-                        <input type="email" name="user-mail-1" placeholder="Почта" required />
+                        <input
+                          type="email"
+                          name="user-mail-1"
+                          placeholder="Почта"
+                          ref={userInputEmailRef}
+                          pattern='[A-Za-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}'
+                          title='Введите корректный email. Например: example@example.com'
+                          onChange={handleInputEmailChange}
+                          required
+                        />
                       </label>
                     </div>
                     <div className="custom-input register-page__field">
                       <label><span className="custom-input__label">Введите ваш пароль</span>
-                        <input type="password" name="user-password-1" placeholder="Пароль" required />
+                        <input
+                          type="password"
+                          name="user-password-1"
+                          placeholder="Пароль"
+                          ref={userInputPasswordRef}
+                          pattern='^(?=.*[A-Za-z])(?=.*\d)[^\s]+$'
+                          title='Пароль должен включать в себя минимум 1 букву и 1 цифру'
+                          onChange={handleInputPasswordChange}
+                          required
+                        />
                       </label>
                     </div>
                     <div className="custom-input register-page__field">
                       <label><span className="custom-input__label">Введите ваше имя</span>
-                        <input type="file" name="user-name-1" data-text="Аватар" accept="image/jpeg" />
+                        <input
+                          type="file"
+                          name="user-name-1"
+                          data-text="Аватар"
+                          accept="image/jpeg"
+                        />
                       </label>
                     </div>
                   </div>
-                  <button className="btn register-page__btn btn--large" type="submit">Зарегистрироваться</button>
+                  <button
+                    className="btn register-page__btn btn--large"
+                    type="submit"
+                    disabled={isButtonDisabled}
+                  >Зарегистрироваться
+                  </button>
                 </form>
               </div>
               <p className="register-page__text-wrap">
