@@ -1,15 +1,16 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { userRegistration } from '../../store/api-actions';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../store/store';
-// import { useSelector } from 'react-redux';
-// import { getIsSuccessRegistered } from '../../store/slices/user-data/user-data-slice';
+import { useSelector } from 'react-redux';
+import { getIsSuccessRegistered } from '../../store/slices/user-data/user-data-slice';
 
 function RegisterPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [isButtonDisabled, setIsButtonDisabled] = React.useState<boolean>(true);
   const [isInputNameValue, setIsInputNameValue] = React.useState<string>('');
@@ -21,6 +22,8 @@ function RegisterPage(): JSX.Element {
   const userInputPasswordRef = React.useRef<HTMLInputElement>(null);
 
   const formRef = React.useRef<HTMLFormElement>(null);
+
+  const isUserSuccessRegistered = useSelector(getIsSuccessRegistered);
 
   const handleInputNameChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     setIsInputNameValue(evt.target.value);
@@ -56,13 +59,19 @@ function RegisterPage(): JSX.Element {
     }
   }, [isInputNameValue, isInputEmailValue, isInputPasswordValue]);
 
+  React.useEffect(() => {
+    if (isUserSuccessRegistered) {
+      navigate(AppRoute.Root);
+    }
+  }, [isUserSuccessRegistered]);
+
   return (
     <div className="wrapper">
       <main>
         <section className="register-page">
           <div className="register-page__header">
             <div className="register-page__img-wrap">
-              <img className="register-page__img" src="img/svg/hero-keks.svg" width="727" height="569" alt="Картика кота." />
+              <img className="register-page__img" src="img/svg/hero-keks.svg" width="727" height="569" alt="Картинка кота." />
             </div>
           </div>
           <div className="register-page__content">

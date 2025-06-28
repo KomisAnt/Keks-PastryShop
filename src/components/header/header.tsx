@@ -1,12 +1,19 @@
 import { useSelector } from 'react-redux';
 import Logo from '../logo/logo';
 import { getUserStatusData } from '../../store/slices/user-data/user-data-slice';
+import React from 'react';
+import { useAppDispatch } from '../../store/store';
+import { fetchUserStatusData } from '../../store/api-actions';
 
 function Header(): JSX.Element {
 
-  // const userData = useSelector(getUserStatusData);
+  const dispatch = useAppDispatch();
 
-  // console.log('userData = ', userData);
+  const userData = useSelector(getUserStatusData);
+
+  React.useEffect(() => {
+    dispatch(fetchUserStatusData());
+  }, [dispatch]);
 
   return (
     <header className="header header--authorized">
@@ -19,11 +26,19 @@ function Header(): JSX.Element {
             <div className="header__user-info">
               <div className="header__user-avatar">
                 <picture>
-                  <source type="image/webp" srcSet="img/content/user-avatar.webp, img/content/user-avatar@2x.webp 2x" />
-                  <img src="img/content/user-avatar.jpg" srcSet="img/content/user-avatar@2x.jpg 2x" width="62" height="62" alt="Аватар пользователя." />
+                  <img
+                    src={userData?.avatarUrl}
+                    width="62"
+                    height="62"
+                    alt={
+                      userData?.name !== undefined
+                        ? `Аватар пользователя ${userData?.name}`
+                        : 'Аватар пользователя'
+                    }
+                  />
                 </picture>
               </div>
-              <p className="header__user-mail">keks@academy.ru</p>
+              <p className="header__user-mail">{userData?.email}</p>
             </div>
           </div>
           <div className="header__buttons">
